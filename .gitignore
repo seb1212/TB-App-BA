@@ -62,3 +62,4 @@ typings/
 
 # .expo folder
 .expo/
+.expo/packager-info.json

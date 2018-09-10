@@ -1,8 +1,8 @@
 {
-  "expoServerPort": 19001,
-  "packagerPort": 19002,
-  "packagerPid": 15092,
-  "expoServerNgrokUrl": "https://87-qv6.snicollin.projet-tb-ba.exp.direct",
-  "packagerNgrokUrl": "https://packager.87-qv6.snicollin.projet-tb-ba.exp.direct",
-  "ngrokPid": 20820
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
