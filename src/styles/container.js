@@ -15,7 +15,7 @@ export const containers = StyleSheet.create({
     backgroundColor: '#B0E0E6',
     alignItems: 'stretch',
     justifyContent: 'center',
-//    height: responsiveHeight(10), // 100% of screen height
-//    width: responsiveWidth(100),
+  //  height: responsiveHeight(100), // 100% of screen height
+  //  width: responsiveWidth(100),
   },
 });

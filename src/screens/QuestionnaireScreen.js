@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Button, Slider, Text } from 'react-native-elements';
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
-import { Button, Slider } from 'react-native-elements';
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+
 
 
 export default class QuestionnaireScreen extends Component {
@@ -16,19 +17,22 @@ export default class QuestionnaireScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
+    const questions = navigation.getParam('questions');
+
+    var report = [];
+    var cpt = 1;
 
     return (
       <View style={containers.questionnaireView}>
-        <Text style={texts.firstTitle}>
-            Question 1/20
+        <Text h2 style={texts.firstTitle}>
+            Question {cpt}/{questions.length}
         </Text>
-        <Text style={texts.secondTitle}>
-          Pourquoi avez-vous fait ce projet ?
-        </Text>
+        <Text h1 style={texts.secondTitle}>{questions[0].que_contenu}</Text>
         <Slider
           value={this.state.value}
           onValueChange={(value) => this.setState({value})} />
-        <Text>Value: {this.state.value}</Text>
+        <Text h3>Réponse : {this.state.value}</Text>
         <Button
           buttonStyle={{
             backgroundColor:'#0000FF',

@@ -4,13 +4,16 @@ import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-nat
 export const texts = StyleSheet.create({
   firstTitle: {
     color: '#000000',
-    fontSize: responsiveFontSize(5), // 10% of total screen size
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+  //  fontSize: responsiveFontSize(5), // 10% of total screen size
+  //  height: responsiveHeight(10),
+  //  width: responsiveWidth(100),
+    textAlign: 'center',
+  //  justifyContent: 'center',
+  //  alignItems: 'center'
   },
   secondTitle: {
     color: '#000000',
-    fontSize: responsiveFontSize(2),
-    alignItems: 'center',
+    textAlign: 'center',
+//    fontSize: responsiveFontSize(2),
   },
 });

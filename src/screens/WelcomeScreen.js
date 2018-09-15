@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import apisauce from 'apisauce';
-import { Text, View, Alert } from 'react-native';
-import { Button } from 'react-native-elements';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
@@ -9,7 +9,9 @@ import { baseUrl } from '../base/baseUrl';
 
 export default class WelcomeScreen extends Component {
 
+
   render() {
+
     const { navigate } = this.props.navigation;
 
     const api = apisauce.create({
@@ -21,26 +23,28 @@ export default class WelcomeScreen extends Component {
       timeout: 15000,
     });
 
+    var questions = [];
+
     goToNextScreen = () => {
-      navigate('Questionnaire')
+      navigate('Questionnaire',{questions});
     };
 
     getQuestions = (infoProjet) => {
       api
         .get('/MonCode/GetQuestions.php', {infoProjet: infoProjet})
-        .then((response) => response.data)
-        .then(console.log);
-      goToNextScreen()
+        .then((response) => questions = response.data)
+      setTimeout( () => {goToNextScreen()},500);
+
     };
 
     return (
       <View style={containers.welcomeView}>
-        <Text style={texts.firstTitle}>
+        <Text h2 style={texts.firstTitle}>
           Bienvenue sur l'application qui vous
           permet d'évaluer l'intégration de Business Analyse
           dans votre projet
         </Text>
-        <Text style={texts.secondTitle}>
+        <Text h4 style={texts.secondTitle}>
           A quel stade du projet êtes-vous ?
         </Text>
         <Button
@@ -53,7 +57,7 @@ export default class WelcomeScreen extends Component {
           raised
           rounded
           color='black'
-          onPress={ () => {getQuestions(1)} }
+          onPress={() => getQuestions(1)}
           title='Avant le projet' />
         <Button
           buttonStyle={{
@@ -65,7 +69,7 @@ export default class WelcomeScreen extends Component {
           raised
           rounded
           color='black'
-          onPress={ () => {getQuestions(2)} }
+          onPress={() => getQuestions(2)}
           title='Pendant le projet' />
         <Button
           buttonStyle={{
@@ -77,7 +81,7 @@ export default class WelcomeScreen extends Component {
           raised
           rounded
           color='black'
-          onPress={ () => {getQuestions(3)} }
+          onPress={() => getQuestions(3)}
           title='Après le projet' />
       </View>
     );
