@@ -8,11 +8,13 @@ import  { texts } from '../styles/text';
 import { baseUrl } from '../base/baseUrl';
 
 export default class WelcomeScreen extends Component {
-
-
+  
   render() {
 
     const { navigate } = this.props.navigation;
+
+    // constantes qui représentent la valeur de attribut projet
+    const BEFORE = 1; DURING = 2; AFTER = 3;
 
     const api = apisauce.create({
       baseURL: baseUrl,
@@ -25,16 +27,15 @@ export default class WelcomeScreen extends Component {
 
     var questions = [];
 
-    goToNextScreen = () => {
-      navigate('Questionnaire',{questions});
-    };
-
     getQuestions = (infoProjet) => {
       api
         .get('/MonCode/GetQuestions.php', {infoProjet: infoProjet})
         .then((response) => questions = response.data)
       setTimeout( () => {goToNextScreen()},500);
+    };
 
+    goToNextScreen = () => {
+      navigate('Questionnaire',{questions});
     };
 
     return (
@@ -57,8 +58,9 @@ export default class WelcomeScreen extends Component {
           raised
           rounded
           color='black'
-          onPress={() => getQuestions(1)}
-          title='Avant le projet' />
+          onPress={() => getQuestions(BEFORE)}
+          title='Avant le projet'
+        />
         <Button
           buttonStyle={{
             backgroundColor:'#0000FF',
@@ -69,8 +71,9 @@ export default class WelcomeScreen extends Component {
           raised
           rounded
           color='black'
-          onPress={() => getQuestions(2)}
-          title='Pendant le projet' />
+          onPress={() => getQuestions(DURING)}
+          title='Pendant le projet'
+        />
         <Button
           buttonStyle={{
             backgroundColor:'#0000FF',
@@ -81,8 +84,9 @@ export default class WelcomeScreen extends Component {
           raised
           rounded
           color='black'
-          onPress={() => getQuestions(3)}
-          title='Après le projet' />
+          onPress={() => getQuestions(AFTER)}
+          title='Après le projet'
+        />
       </View>
     );
   }

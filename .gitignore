@@ -61,5 +61,5 @@ typings/
 .next
 
 # .expo folder
-.expo/
 .expo/packager-info.json
+.expo/settings.json

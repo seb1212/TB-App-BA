@@ -1,7 +1,7 @@
 {
+  "urlRandomness": "8e-t2c",
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,
-  "minify": false,
-  "urlRandomness": "87-qv6"
+  "minify": false
 }
