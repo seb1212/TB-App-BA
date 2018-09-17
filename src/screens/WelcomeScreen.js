@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import apisauce from 'apisauce';
 import { View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
-import { baseUrl } from '../base/baseUrl';
+import  { buttons } from '../styles/button';
+import { urls } from '../base/urls';
 
 export default class WelcomeScreen extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      baseURL: urls.baseURL,
+      getQuest: urls.getQuest
+    };
+  };
   render() {
 
     const { navigate } = this.props.navigation;
@@ -16,11 +22,15 @@ export default class WelcomeScreen extends Component {
     // constantes qui représentent la valeur de attribut projet
     const BEFORE = 1; DURING = 2; AFTER = 3;
 
+    // constantes qui représentent les titres des boutons
+    const BEF_PROJ = 'Avant le projet'; DUR_PROJ = 'Pendant le projet'; AFT_PROJ = 'Après le projet';
+
     const api = apisauce.create({
-      baseURL: baseUrl,
+      baseURL: this.state.baseURL,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Charset': 'UTF-8'
       },
       timeout: 15000,
     });
@@ -29,9 +39,9 @@ export default class WelcomeScreen extends Component {
 
     getQuestions = (infoProjet) => {
       api
-        .get('/MonCode/GetQuestions.php', {infoProjet: infoProjet})
+        .get(this.state.getQuest, {infoProjet: infoProjet})
         .then((response) => questions = response.data)
-      setTimeout( () => {goToNextScreen()},500);
+      setTimeout( () => {goToNextScreen()},500)
     };
 
     goToNextScreen = () => {
@@ -40,52 +50,46 @@ export default class WelcomeScreen extends Component {
 
     return (
       <View style={containers.welcomeView}>
-        <Text h2 style={texts.firstTitle}>
+        <Text style={texts.welFirstTitle}>
           Bienvenue sur l'application qui vous
           permet d'évaluer l'intégration de Business Analyse
           dans votre projet
         </Text>
-        <Text h4 style={texts.secondTitle}>
+        <Text style={texts.welSecondTitle}>
           A quel stade du projet êtes-vous ?
         </Text>
         <Button
-          buttonStyle={{
-            backgroundColor:'#0000FF',
-            width: responsiveWidth(90),
-            height: responsiveHeight(10),
-          }}
+          buttonStyle={buttons.default}
+          containerViewStyle={{backgroundColor: 'transparent'}}
           large
           raised
           rounded
-          color='black'
+          color='white'
+          fontWeight='bold'
           onPress={() => getQuestions(BEFORE)}
-          title='Avant le projet'
+          title={BEF_PROJ}
         />
         <Button
-          buttonStyle={{
-            backgroundColor:'#0000FF',
-            width: responsiveWidth(90),
-            height: responsiveHeight(10),
-          }}
+          buttonStyle={buttons.default}
+          containerViewStyle={{backgroundColor: 'transparent'}}
           large
           raised
           rounded
-          color='black'
+          color='white'
+          fontWeight='bold'
           onPress={() => getQuestions(DURING)}
-          title='Pendant le projet'
+          title={DUR_PROJ}
         />
         <Button
-          buttonStyle={{
-            backgroundColor:'#0000FF',
-            width: responsiveWidth(90),
-            height: responsiveHeight(10),
-          }}
+          buttonStyle={buttons.last}
+          containerViewStyle={{backgroundColor: 'transparent'}}
           large
           raised
           rounded
-          color='black'
+          color='white'
+          fontWeight='bold'
           onPress={() => getQuestions(AFTER)}
-          title='Après le projet'
+          title={AFT_PROJ}
         />
       </View>
     );

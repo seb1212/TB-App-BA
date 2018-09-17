@@ -1,23 +1,22 @@
-
-
-//Unused for the moment 08/09/18
-
 import { StyleSheet } from 'react-native';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
 export const buttons = StyleSheet.create({
-  project: {
-    flex: 1,
-  //color: 'black',
-    backgroundColor: '#0000FF',
-  //  height: responsiveHeight(10),
-  //  width: responsiveWidth(100),
-  },
-  others: {
-    flex: 1,
-    color:'white',
+  default: {
     backgroundColor:'#0000FF',
-    width:'100',
-    fontSize: 15,
-  }
+    width: responsiveWidth(60),
+    height: responsiveHeight(10),
+    marginBottom: 25,
+  },
+  last: {
+    backgroundColor:'#0000FF',
+    width: responsiveWidth(60),
+    height: responsiveHeight(10),
+    marginBottom: 0,
+  },
+  questionnaire: {
+    backgroundColor:'#0000FF',
+    width: responsiveWidth(60),
+    height: responsiveHeight(10),
+  },
 });

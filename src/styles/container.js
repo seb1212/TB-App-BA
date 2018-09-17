@@ -4,18 +4,22 @@ import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimen
 export const containers = StyleSheet.create({
   welcomeView: {
     flex: 1,
-    backgroundColor: '#B0E0E6',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-//    height: responsiveHeight(10), // 100% of screen height
-//    width: responsiveWidth(100),
+    height: responsiveHeight(100), // 100% of screen height
+    width: responsiveWidth(100),
+    marginTop: -25,
+    marginBottom: -45,
   },
   questionnaireView: {
     flex: 1,
-    backgroundColor: '#B0E0E6',
+    backgroundColor: '#FFFFFF',
     alignItems: 'stretch',
     justifyContent: 'center',
-  //  height: responsiveHeight(100), // 100% of screen height
-  //  width: responsiveWidth(100),
+    height: responsiveHeight(100),
+    width: responsiveWidth(100),
+    marginTop: -25,
+    marginBottom: -45,
   },
 });

@@ -4,9 +4,9 @@ import { Button, Slider, Text } from 'react-native-elements';
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
+import  { buttons } from '../styles/button';
 
 export default class QuestionnaireScreen extends Component {
-
   constructor(props) {
     super(props);
 
@@ -41,40 +41,47 @@ export default class QuestionnaireScreen extends Component {
 
     return (
       <View style={containers.questionnaireView}>
-        <Text h2 style={texts.firstTitle}>
+        <Text style={texts.queFirstTitle}>
             Question {this.state.cptNumQuest}/{questions.length}
         </Text>
-        <Text h1 style={texts.secondTitle}>{questions[this.state.cptArrayQuest].que_contenu}</Text>
-        <Text h4 style={texts.secondTitle}>Veuillez mettre une note en bougeant le curseur</Text>
+        <Text style={texts.queSecondTitle}>
+          {questions[this.state.cptArrayQuest].que_contenu} ?
+        </Text>
+        <Text style={texts.queThirdTitle}>Veuillez donner une note en bougeant le curseur</Text>
+        <Text style={texts.queScore}>Note: {this.state.value}</Text>
         <Slider
+          style={{
+            marginTop: 25,
+            marginBottom: 20,
+          }}
           minimumValue={1}
           maximumValue={5}
           step={1}
           animateTransitions={true}
           thumbStyle={{
-            "backgroundColor": "#0000FF",
-            "position": "absolute",
-            "width": 25,
-            "height": 50,
-            "borderRadius": 10,
-            "top": 22,
+            backgroundColor: '#0000FF',
+            position: 'absolute',
+            width: 25,
+            height: 50,
+            borderRadius: 25,
+            top: 22,
           }}
           minimumTrackTintColor={'#32CD32'}
           value={this.state.value}
           onValueChange={(value) => this.setState({value})}
         />
-        <Text h5 style={texts.secondTitle}>(1 étant la plus basse et 5 la plus haute)</Text>
-        <Text h3 style={texts.secondTitle}>Note: {this.state.value}</Text>
+        <Text style={texts.queSmallTitle}>(1 étant la plus basse et 5 la plus haute)</Text>
         <Button
-          buttonStyle={{
-            backgroundColor:'#0000FF',
-            width: responsiveWidth(90),
-            height: responsiveHeight(10),
+          buttonStyle={buttons.last}
+          containerViewStyle={{
+            backgroundColor: 'transparent',
+            alignItems: 'center',
           }}
           large
           raised
           rounded
-          color='black'
+          color='white'
+          fontWeight='bold'
           onPress={() => getNextQuestion()}
           title={this.state.titleButton}
         />
