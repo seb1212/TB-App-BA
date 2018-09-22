@@ -45,7 +45,7 @@ export default class QuestionnaireScreen extends Component {
             Question {this.state.cptNumQuest}/{questions.length}
         </Text>
         <Text style={texts.queSecondTitle}>
-          {questions[this.state.cptArrayQuest].que_contenu} ?
+          {questions[this.state.cptArrayQuest].content}
         </Text>
         <Text style={texts.queThirdTitle}>Veuillez donner une note en bougeant le curseur</Text>
         <Text style={texts.queScore}>Note: {this.state.value}</Text>
