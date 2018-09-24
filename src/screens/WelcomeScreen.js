@@ -59,7 +59,7 @@ export default class WelcomeScreen extends Component {
           A quel stade du projet êtes-vous ?
         </Text>
         <Button
-          buttonStyle={buttons.default}
+          buttonStyle={buttons.welDefault}
           containerViewStyle={{backgroundColor: 'transparent'}}
           large
           raised
@@ -70,7 +70,7 @@ export default class WelcomeScreen extends Component {
           title={BEF_PROJ}
         />
         <Button
-          buttonStyle={buttons.default}
+          buttonStyle={buttons.welDefault}
           containerViewStyle={{backgroundColor: 'transparent'}}
           large
           raised
@@ -81,7 +81,7 @@ export default class WelcomeScreen extends Component {
           title={DUR_PROJ}
         />
         <Button
-          buttonStyle={buttons.last}
+          buttonStyle={buttons.welLast}
           containerViewStyle={{backgroundColor: 'transparent'}}
           large
           raised

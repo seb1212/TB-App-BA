@@ -17,7 +17,7 @@ export const texts = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
   },
-  queFirstTitle: {
+  queNumQuest: {
     color: '#000000',
     fontSize: responsiveFontSize(3),
     fontWeight: 'bold',
@@ -25,19 +25,12 @@ export const texts = StyleSheet.create({
     marginTop: 0,
     marginBottom: 20,
   },
-  queSecondTitle: {
-    color: '#000000',
-    fontSize: responsiveFontSize(4),
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  queThirdTitle: {
+  queContQuest: {
     color: '#000000',
     fontSize: responsiveFontSize(3),
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   queScore: {
     color: '#000000',
@@ -49,6 +42,6 @@ export const texts = StyleSheet.create({
     color: '#000000',
     fontSize: responsiveFontSize(2),
     textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 1,
   },
 });

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Button, Slider, Text } from 'react-native-elements';
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
@@ -11,9 +10,11 @@ export default class QuestionnaireScreen extends Component {
     super(props);
 
     this.state = {
-      value: 1,
+      score: 1,
+      responses: [],
       cptArrayQuest: 0,
       cptNumQuest: 1,
+      refreshing: false,
       titleButton: 'Valider',
     };
   };
@@ -23,32 +24,34 @@ export default class QuestionnaireScreen extends Component {
     const { navigation } = this.props;
     const questions = navigation.getParam('questions');
 
-    // constantes qui représentent le libellé du bouton
-    const VALIDATE = 'Valider'; REPORT = 'Rapport';
-
-    var report = [];
-
     getNextQuestion = () => {
-      this.state.titleButton == VALIDATE ? refreshState() : navigate('Report')
+      refreshState()
     };
 
     refreshState = () => {
-      this.state.cptNumQuest++
-      this.state.cptArrayQuest++
-      this.state.cptNumQuest == questions.length ? this.setState({titleButton: REPORT}) : ""
-      this.setState({value: 1})
-    }
+      if (this.state.cptNumQuest == questions.length) {
+        navigate('LaunchReport')
+      }else{
+        this.state.cptNumQuest++
+        this.state.cptArrayQuest++
+        this.setState({score: 1})
+      }
+    };
+
+    saveScore = () => {
+      this.state.responses.push({id: questions[this.state.cptArrayQuest].number,score: this.state.score});
+    };
 
     return (
       <View style={containers.questionnaireView}>
-        <Text style={texts.queFirstTitle}>
+        <Text style={texts.queNumQuest}>
             Question {this.state.cptNumQuest}/{questions.length}
         </Text>
-        <Text style={texts.queSecondTitle}>
+        <Text style={texts.queContQuest}>
           {questions[this.state.cptArrayQuest].content}
         </Text>
-        <Text style={texts.queThirdTitle}>Veuillez donner une note en bougeant le curseur</Text>
-        <Text style={texts.queScore}>Note: {this.state.value}</Text>
+        <Text></Text>
+        <Text style={texts.queScore}>Note: {this.state.score}</Text>
         <Slider
           style={{
             marginTop: 25,
@@ -67,12 +70,13 @@ export default class QuestionnaireScreen extends Component {
             top: 22,
           }}
           minimumTrackTintColor={'#32CD32'}
-          value={this.state.value}
-          onValueChange={(value) => this.setState({value})}
+          value={this.state.score}
+          onValueChange={(score) => this.setState({score})}
         />
+        <Text style={texts.queSmallTitle}>Veuillez donner une note en bougeant le curseur</Text>
         <Text style={texts.queSmallTitle}>(1 étant la plus basse et 5 la plus haute)</Text>
         <Button
-          buttonStyle={buttons.last}
+          buttonStyle={buttons.quest}
           containerViewStyle={{
             backgroundColor: 'transparent',
             alignItems: 'center',
@@ -82,7 +86,7 @@ export default class QuestionnaireScreen extends Component {
           rounded
           color='white'
           fontWeight='bold'
-          onPress={() => getNextQuestion()}
+          onPress={() => {saveScore(),getNextQuestion()}}
           title={this.state.titleButton}
         />
       </View>
