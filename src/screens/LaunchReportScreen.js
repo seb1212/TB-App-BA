@@ -16,9 +16,11 @@ export default class LaunchReportScreen extends Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <View style={containers.questionnaireView}>
-        <Text style={texts.queFirstTitle}>
+      <View style={containers.default}>
+        <Text style={texts.launRepThank}>
           Merci d'avoir rempli le questionnaire.
+        </Text>
+        <Text style={texts.launRepClic}>
           Veuillez cliquer sur le bouton pour visualiser le rapport.
         </Text>
         <Button

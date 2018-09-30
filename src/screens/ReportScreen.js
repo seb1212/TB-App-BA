@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { View, Text } from 'react-native';
+import { Button, Badge } from 'react-native-elements';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
-import { Button, Badge } from 'react-native-elements';
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+import  { buttons } from '../styles/button';
 
 
 export default class ReportScreen extends Component {
@@ -11,30 +11,30 @@ export default class ReportScreen extends Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <View style={containers.welcomeView}>
-        <Text style={texts.firstTitle}>
+      <View style={containers.default}>
+        <Text style={texts.repText}>
           Graphique
         </Text>
-        <Text style={texts.firstTitle}>
-          Corrélation : 1
+        <Text style={texts.repScore}>
+          Note globale : 4   <Badge containerStyle={{ backgroundColor: 'green' }} />
         </Text>
-        <Text style={texts.secondTitle}>
-          Niveau d'implémentation :
+        <Text style={texts.repCohe}>
+          Cohérence : 1
         </Text>
-        <Badge containerStyle={{ backgroundColor: 'green'}} />
-        <Text style={texts.secondTitle}>
-          Explication : bla bla bla
+        <Text style={texts.repExpl}>
+          Explication : Le résultat représente une bonne implémentation de la BA dans votre projet
         </Text>
         <Button
-          buttonStyle={{
-            backgroundColor:'#0000FF',
-            width: responsiveWidth(90),
-            height: responsiveHeight(10),
+          buttonStyle={buttons.launRep}
+          containerViewStyle={{
+            backgroundColor: 'transparent',
+            alignItems: 'center',
           }}
           large
           raised
           rounded
-          color='black'
+          color='white'
+          fontWeight='bold'
           onPress={() => navigate('Information')}
           title='Envoyer rapport' />
       </View>

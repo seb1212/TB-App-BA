@@ -50,12 +50,14 @@ export default class QuestionnaireScreen extends Component {
         <Text style={texts.queContQuest}>
           {questions[this.state.cptArrayQuest].content}
         </Text>
-        <Text></Text>
+        <Text style={texts.queCommQuest}>Comment question</Text>
         <Text style={texts.queScore}>Note: {this.state.score}</Text>
         <Slider
           style={{
             marginTop: 25,
             marginBottom: 20,
+            marginLeft: 10,
+            marginRight: 10,
           }}
           minimumValue={1}
           maximumValue={5}

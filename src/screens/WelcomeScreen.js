@@ -49,7 +49,7 @@ export default class WelcomeScreen extends Component {
     };
 
     return (
-      <View style={containers.welcomeView}>
+      <View style={containers.default}>
         <Text style={texts.welFirstTitle}>
           Bienvenue sur l'application qui vous
           permet d'évaluer l'intégration de Business Analyse

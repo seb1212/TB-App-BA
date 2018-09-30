@@ -24,6 +24,12 @@ export const buttons = StyleSheet.create({
     backgroundColor:'#0000FF',
     width: responsiveWidth(60),
     height: responsiveHeight(10),
-    marginTop: 20,
+    marginBottom: 0,
+  },
+  report: {
+    backgroundColor:'#0000FF',
+    width: responsiveWidth(60),
+    height: responsiveHeight(10),
+    marginBottom: 0,
   },
 });
