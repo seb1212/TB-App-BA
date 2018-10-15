@@ -30,6 +30,6 @@ export const buttons = StyleSheet.create({
     backgroundColor:'#0000FF',
     width: responsiveWidth(60),
     height: responsiveHeight(10),
-    marginBottom: 0,
+    marginBottom: 10,
   },
 });

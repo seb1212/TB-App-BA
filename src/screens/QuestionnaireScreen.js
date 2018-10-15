@@ -43,7 +43,7 @@ export default class QuestionnaireScreen extends Component {
     };
 
     return (
-      <View style={containers.questionnaireView}>
+      <View style={containers.questionnaire}>
         <Text style={texts.queNumQuest}>
             Question {this.state.cptNumQuest}/{questions.length}
         </Text>
@@ -64,7 +64,7 @@ export default class QuestionnaireScreen extends Component {
           step={1}
           animateTransitions={true}
           thumbStyle={{
-            backgroundColor: '#0000FF',
+            backgroundColor: '#708090',
             position: 'absolute',
             width: 25,
             height: 50,

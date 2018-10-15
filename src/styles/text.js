@@ -67,11 +67,9 @@ export const texts = StyleSheet.create({
   },
   repScore: {
     color: '#000000',
-    fontSize: responsiveFontSize(4),
-    textAlign: 'center',
+    fontSize: responsiveFontSize(3),
     fontWeight: 'bold',
-    marginTop: 50,
-    marginBottom: 20,
+    marginRight: 30
   },
   repCohe: {
     color: '#000000',
@@ -82,7 +80,6 @@ export const texts = StyleSheet.create({
     color: '#000000',
     fontSize: responsiveFontSize(3),
     textAlign: 'center',
-    fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 40,
   },

@@ -12,7 +12,7 @@ export const containers = StyleSheet.create({
     marginTop: -25,
     marginBottom: -45,
   },
-  questionnaireView: {
+  questionnaire: {
     flex: 1,
     backgroundColor: '#FFFFFF',
     alignItems: 'stretch',
@@ -22,4 +22,22 @@ export const containers = StyleSheet.create({
     marginTop: -25,
     marginBottom: -45,
   },
+  repScrollContentStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  repScroll: {
+    backgroundColor: '#FFFFFF',
+    height: responsiveHeight(100),
+    width: responsiveWidth(100),
+  },
+  repScore: {
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 20
+  }
 });
