@@ -8,12 +8,17 @@ import  { buttons } from '../styles/button';
 export default class LaunchReportScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
   };
+
   render() {
 
     const { navigate } = this.props.navigation;
+
+    goToNextScreen = () => {
+      var responses = this.props.navigation.getParam('responses');
+      var dimensions = this.props.navigation.getParam('dimensions');
+      navigate('Report',{responses, dimensions});
+    };
 
     return (
       <View style={containers.default}>
@@ -34,10 +39,10 @@ export default class LaunchReportScreen extends Component {
           rounded
           color='white'
           fontWeight='bold'
-          onPress={() => navigate('Report')}
+          onPress={() => goToNextScreen()}
           title={'Rapport'}
         />
       </View>
-    )
+    );
   }
 }

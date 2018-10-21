@@ -10,27 +10,54 @@ export default class QuestionnaireScreen extends Component {
     super(props);
 
     this.state = {
+      titleButton: 'Valider',
+      refreshing: false,
       score: 1,
+      questions: this.props.navigation.getParam('questions'),
       responses: [],
       cptArrayQuest: 0,
       cptNumQuest: 1,
-      refreshing: false,
-      titleButton: 'Valider',
+      cptBes: 0,
+      sumBes: 0,
+      cptPP: 0,
+      sumPP: 0,
+      cptCha: 0,
+      sumCha: 0,
+      cptVal: 0,
+      sumVal: 0,
+      cptCon: 0,
+      sumCon: 0,
+      cptSol: 0,
+      sumSol: 0
     };
   };
 
   render() {
-    const { navigate } = this.props.navigation;
-    const { navigation } = this.props;
-    const questions = navigation.getParam('questions');
 
-    getNextQuestion = () => {
-      refreshState()
+    const { navigate } = this.props.navigation;
+
+    returnValue = (sum,cpt) => {
+      return  (sum>0) || (cpt>0) ? Math.round(sum/cpt) : 1
+    }
+
+    createTabDim = () => {
+      return [
+        {
+          'Besoins': returnValue(this.state.sumBes,this.state.cptBes),
+          'Parties prenantes': returnValue(this.state.sumPP,this.state.cptPP),
+          'Changement': returnValue(this.state.sumCha,this.state.cptCha),
+          'Valeurs': returnValue(this.state.sumVal,this.state.cptVal),
+          'Contexte': returnValue(this.state.sumCon,this.state.cptCon),
+          'Solutions': returnValue(this.state.sumSol,this.state.cptSol)
+        }
+      ]
     };
 
-    refreshState = () => {
-      if (this.state.cptNumQuest == questions.length) {
-        navigate('LaunchReport')
+    getNextQuestion = () => {
+      if (this.state.cptNumQuest == this.state.questions.length) {
+        var responses = this.state.responses
+        var dimensions = createTabDim()
+        navigate('LaunchReport',{responses, dimensions})
       }else{
         this.state.cptNumQuest++
         this.state.cptArrayQuest++
@@ -38,17 +65,47 @@ export default class QuestionnaireScreen extends Component {
       }
     };
 
+    saveDimScore = () => {
+      switch (this.state.questions[this.state.cptArrayQuest].type) {
+        case 'Besoins':
+          this.state.cptBes++;
+          this.state.sumBes+= this.state.score;
+          break;
+        case 'Parties prenantes':
+          this.state.cptPP++;
+          this.state.sumPP+= this.state.score;
+          break;
+        case 'Changement':
+          this.state.cptCha++;
+          this.state.sumCha+= this.state.score;
+          break;
+        case 'Valeurs':
+          this.state.cptVal++;
+          this.state.sumVal+= this.state.score;
+          break;
+        case 'Contexte':
+          this.state.cptCon++;
+          this.state.sumCon+= this.state.score;
+          break;
+        case 'Solutions':
+          this.state.cptSol++;
+          this.state.sumSol+= this.state.score;
+          break;
+      }
+    };
+
     saveScore = () => {
-      this.state.responses.push({id: questions[this.state.cptArrayQuest].number,score: this.state.score});
+      saveDimScore();
+      this.state.responses.push({questions: this.state.questions[this.state.cptArrayQuest], score: this.state.score})
     };
 
     return (
       <View style={containers.questionnaire}>
         <Text style={texts.queNumQuest}>
-            Question {this.state.cptNumQuest}/{questions.length}
+            Question {this.state.cptNumQuest}/{this.state.questions.length}
         </Text>
         <Text style={texts.queContQuest}>
-          {questions[this.state.cptArrayQuest].content}
+          {this.state.questions[this.state.cptArrayQuest].content}
         </Text>
         <Text style={texts.queCommQuest}>Comment question</Text>
         <Text style={texts.queScore}>Note: {this.state.score}</Text>

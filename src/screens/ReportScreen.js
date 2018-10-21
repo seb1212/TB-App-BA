@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text } from 'react-native';
-import { Button, Badge } from 'react-native-elements';
+import { View, ScrollView } from 'react-native';
+import { Button, Badge, Text } from 'react-native-elements';
 import RadarChart from "../components/RadarChart";
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
@@ -11,14 +11,20 @@ import  { buttons } from '../styles/button';
 export default class ReportScreen extends Component {
   constructor(props) {
     super(props);
-  }
+
+    this.state = {
+      responses: this.props.navigation.getParam('responses'),
+      dimensions: this.props.navigation.getParam('dimensions')
+    };
+  };
 
   render() {
+
     const { navigate } = this.props.navigation;
 
     return (
       <ScrollView contentContainerStyle={containers.repContentStyle} style={containers.repScroll}>
-        <RadarChart />
+        <RadarChart dimValues={this.state.dimensions}/>
         <View style={containers.repScore}>
           <Text style={texts.repScore}>
             Note globale : 4

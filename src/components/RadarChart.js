@@ -1,21 +1,19 @@
-
 import React, { Component } from "react";
 import Svg from "react-native-svg";
 import { VictoryChart,VictoryGroup,VictoryArea,VictoryTheme,VictoryPolarAxis,VictoryLabel } from "victory-native";
 
-const conceptsData = [
-  { Besoins: 1, Changement: 5, Value: 2, Parties_prenantes: 4, Context: 3, Solutions: 4 },
-  { Besoins: 3, Changement: 4, Value: 1, Parties_prenantes: 5, Context: 5, Solutions: 2 }
-];
+//constantes qui représentent la valeur maximum des axes (dimensions)
+const AXE_MAX_VALUE = 5;
 
 export default class RadarChart extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      data: this.processData(conceptsData),
-      maxima: this.getMaxima(conceptsData)
+      data: this.processData(this.props.dimValues),
+      maxima: this.getMaxima(this.props.dimValues),
     };
-  }
+  };
 
   getMaxima(data) {
     const groupedData = Object.keys(data[0]).reduce((memo, key) => {
@@ -23,10 +21,10 @@ export default class RadarChart extends Component {
       return memo;
     }, {});
     return Object.keys(groupedData).reduce((memo, key) => {
-      memo[key] = 5;
+      memo[key] = AXE_MAX_VALUE;
       return memo;
     }, {});
-  }
+  };
 
   processData(data) {
     const maxByGroup = this.getMaxima(data);
@@ -36,9 +34,10 @@ export default class RadarChart extends Component {
       });
     };
     return data.map((datum) => makeDataArray(datum));
-  }
+  };
 
   render() {
+
     return (
       <VictoryChart polar
         theme={VictoryTheme.material}
@@ -48,8 +47,9 @@ export default class RadarChart extends Component {
           colorScale={["blue", "green"]}
           style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}
         >
-          {this.state.data.map((data, i) => {
-            return <VictoryArea key={20} data={data}/>;
+          {
+            this.state.data.map((data, i) => {
+            return <VictoryArea key={i} data={data}/>;
           })}
         </VictoryGroup>
       {

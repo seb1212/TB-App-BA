@@ -10,16 +10,19 @@ import { urls } from '../base/urls';
 export default class WelcomeScreen extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       baseURL: urls.baseURL,
-      getQuest: urls.getQuest
+      getQuest: urls.getQuest,
+      questions: []
     };
   };
+
   render() {
 
     const { navigate } = this.props.navigation;
 
-    // constantes qui représentent la valeur de attribut projet
+    // constantes qui représentent les valeurs de la table projet
     const BEFORE = 1; DURING = 2; AFTER = 3;
 
     // constantes qui représentent les titres des boutons
@@ -35,16 +38,15 @@ export default class WelcomeScreen extends Component {
       timeout: 15000,
     });
 
-    var questions = [];
-
     getQuestions = (infoProjet) => {
       api
         .get(this.state.getQuest, {infoProjet: infoProjet})
-        .then((response) => questions = response.data)
+        .then((response) => this.state.questions = response.data)
       setTimeout( () => {goToNextScreen()},500)
     };
 
     goToNextScreen = () => {
+      var questions = this.state.questions;
       navigate('Questionnaire',{questions});
     };
 

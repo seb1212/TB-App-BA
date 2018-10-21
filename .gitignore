@@ -61,5 +61,9 @@ typings/
 .next
 
 # .expo folder
-.expo/packager-info.json
 .expo/settings.json
+.expo/packager-info.json.1072847343
+.expo/packager-info.json
+.expo/packager-info.json.2056594128
+.expo/packager-info.json
+src/base/urls.js
