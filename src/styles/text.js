@@ -83,4 +83,11 @@ export const texts = StyleSheet.create({
     marginTop: 20,
     marginBottom: 40,
   },
+  sendRepEmail: {
+    color: '#000000',
+    fontSize: responsiveFontSize(3),
+    textAlign: 'center',
+    marginTop: 40,
+    marginBottom: 40,
+  },
 });
