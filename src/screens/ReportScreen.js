@@ -13,6 +13,8 @@ export default class ReportScreen extends Component {
     super(props);
 
     this.state = {
+      // responses : utilisé seulement pour passer le tab à l'écran suivant pour le moment mais Besoins
+      // lors du calcul de cohérence
       responses: this.props.navigation.getParam('responses'),
       dimensions: this.props.navigation.getParam('dimensions')
     };
@@ -21,6 +23,12 @@ export default class ReportScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
+
+    goToNextScreen = () => {
+      var responses = this.state.responses;
+      var dimensions = this.state.dimensions;
+      navigate('SendReport',{responses, dimensions});
+    };
 
     return (
       <ScrollView contentContainerStyle={containers.repContentStyle} style={containers.repScroll}>
@@ -48,7 +56,7 @@ export default class ReportScreen extends Component {
             rounded
             color='white'
             fontWeight='bold'
-            onPress={() => navigate('SendReport')}
+            onPress={() => goToNextScreen()}
             title='Demander rapport'
         />
       </ScrollView>

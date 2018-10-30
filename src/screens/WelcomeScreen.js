@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import apisauce from 'apisauce';
 import { View } from 'react-native';
 import { Button, Text } from 'react-native-elements';
+import apisauce from 'apisauce';
+import { urls } from '../base/urls';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
-import { urls } from '../base/urls';
+
 
 export default class WelcomeScreen extends Component {
   constructor(props) {
