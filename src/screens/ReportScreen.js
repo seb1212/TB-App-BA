@@ -48,7 +48,7 @@ export default class ReportScreen extends Component {
             rounded
             color='white'
             fontWeight='bold'
-            onPress={() => navigate('Information')}
+            onPress={() => navigate('SendReport')}
             title='Demander rapport'
         />
       </ScrollView>
