@@ -4,7 +4,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import QuestionnaireScreen from "../screens/QuestionnaireScreen";
 import LaunchReportScreen from "../screens/LaunchReportScreen";
 import ReportScreen from "../screens/ReportScreen";
-import SendReportScreen from "../screens/SendReportScreen";
+import InformationScreen from "../screens/InformationScreen";
 import { responsiveFontSize, responsiveWidth, responsiveHeight } from 'react-native-responsive-dimensions';
 
 const stackNavigator = createStackNavigator({
@@ -76,21 +76,10 @@ const stackNavigator = createStackNavigator({
       headerTintColor: 'white',
     }),
   },
-  SendReport: {
-    screen: SendReportScreen,
+  Information: {
+    screen: InformationScreen,
     navigationOptions: ({ navigation }) => ({
       title: 'Envoyer le rapport',
-      headerStyle: {
-        backgroundColor: '#4169E1',
-      },
-      headerTitleStyle: {
-        flex: 1,
-        fontWeight: 'bold',
-        fontSize: responsiveFontSize(3),
-        textAlign: 'center',
-        color: 'white'
-      },
-      headerTintColor: 'white',
     }),
   },
 });
