@@ -87,6 +87,17 @@ export const texts = StyleSheet.create({
     color: '#000000',
     fontSize: responsiveFontSize(3),
     textAlign: 'center',
+    marginBottom: 40,
+    height: 50,
+    width: responsiveWidth(75),
+    borderColor: 'gray',
+    borderWidth: 1
+  },
+  sendRepTitle: {
+    color: '#000000',
+    fontSize: responsiveFontSize(3),
+    fontWeight: 'bold',
+    textAlign: 'center',
     marginTop: 40,
     marginBottom: 40,
   },

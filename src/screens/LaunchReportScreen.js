@@ -14,10 +14,22 @@ export default class LaunchReportScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
+    getBadgeColor = (scoreTot) => {
+      if (scoreTot >= 4) {
+        return 'green'
+      }else if (scoreTot >= 3){
+        return 'orange'
+      }else{
+        return 'red'
+      }
+    };
+
     goToNextScreen = () => {
-      var responses = this.props.navigation.getParam('responses');
-      var dimensions = this.props.navigation.getParam('dimensions');
-      navigate('Report',{responses, dimensions});
+      var responses = this.props.navigation.getParam('responses')
+      var dimensions = this.props.navigation.getParam('dimensions')
+      var scoreTot = this.props.navigation.getParam('scoreTot')
+      var color = getBadgeColor(scoreTot)
+      navigate('Report',{responses, dimensions, scoreTot, color});
     };
 
     return (

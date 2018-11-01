@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, Alert } from 'react-native';
 import { Button, Text, CheckBox } from 'react-native-elements';
 import apisauce from 'apisauce';
 import { urls } from '../base/urls';
@@ -41,11 +41,32 @@ export default class SendReportScreen extends Component {
       api
         .post(this.state.postReport, {responses: this.state.responses,dimensions: this.state.dimensions,
               email: this.state.email})
-        .then((response) => console.log(response.data))
+        .then((response) => {
+          if (response.status == 200) {
+            Alert.alert(
+            'Email envoyé',
+            'Voulez-vous refaire un questionnaire ?',
+            [
+              {text: 'Non', onPress: () => BackHandler.exitApp(), style: 'cancel'},
+              {text: 'Oui', onPress: () => navigate('Welcome')},
+            ],
+            { cancelable: false }
+          );
+        }else{
+          Alert.alert(
+          'Email non envoyé',
+          'Merci de vérifier votre email et votre connexion',
+          [
+            {text: 'OK', onPress: () => console.log('ok'),style: 'cancel'},
+          ],
+          { cancelable: false }
+        );
+        }
+      console.log(response.data)})
     };
 
     stateButton = () => {
-      if (this.state.isCheckedCall && this.state.isCheckedStat) {
+      if (this.state.isCheckedStat) {
         this.setState({isDisabled: false})
       }else{
         this.setState({isDisabled: true})
@@ -59,13 +80,12 @@ export default class SendReportScreen extends Component {
 
     changeStateChkCall = () => {
       this.setState({isCheckedCall: !this.state.isCheckedCall})
-      setTimeout( () => {stateButton()},100)
     };
 
     return (
       <View style={containers.default}>
-        <Text style={texts.sendRepEmail}>
-          Merci d'entrer votre email ci-dessous
+        <Text style={texts.sendRepTitle}>
+          Merci d'entrer votre email et d'accepter la collecte des informations pour recevoir le rapport en PDF
         </Text>
         <TextInput
           style={texts.sendRepEmail}
@@ -74,13 +94,13 @@ export default class SendReportScreen extends Component {
         />
         <CheckBox
           center
-          title='Click Here to Remove This Item'
+          title='Acceptez-vous que nous collections vos réponses et votre email à des fins statistiques ?'
           checked={this.state.isCheckedStat}
           onPress={() => changeStateChkStat()}
         />
         <CheckBox
           center
-          title='Click Here to Remove This Item'
+          title='Souhaitez-vous être contacté pour un rapport plus détaillé ?'
           checked={this.state.isCheckedCall}
           onPress={() => changeStateChkCall()}
         />
@@ -96,7 +116,7 @@ export default class SendReportScreen extends Component {
             color='white'
             fontWeight='bold'
             disabled={this.state.isDisabled}
-            onPress={() => {postReport(),navigate('Welcome')}}
+            onPress={() => postReport()}
             title='Envoyer rapport'
         />
       </View>

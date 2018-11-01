@@ -57,7 +57,7 @@ export default class RadarChart extends Component {
           return (
             <VictoryPolarAxis key={i} dependentAxis
               style={{
-                axisLabel: { padding: 10 },
+                axisLabel: { padding: 20 },
                 axis: { stroke: "none" },
                 grid: { stroke: "grey", strokeWidth: 0.25, opacity: 0.5 }
               }}
@@ -67,7 +67,7 @@ export default class RadarChart extends Component {
               labelPlacement="perpendicular"
               axisValue={i + 1} label={key}
               tickFormat={(t) => Math.ceil(t * this.state.maxima[key])}
-              tickValues={[0.25, 0.5, 0.75]}
+              tickValues={[0.2, 0.4, 0.6, 0.8, 1]}
             />
           );
         })

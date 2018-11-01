@@ -13,10 +13,10 @@ export default class ReportScreen extends Component {
     super(props);
 
     this.state = {
-      // responses : utilisé seulement pour passer le tab à l'écran suivant pour le moment mais Besoins
-      // lors du calcul de cohérence
       responses: this.props.navigation.getParam('responses'),
-      dimensions: this.props.navigation.getParam('dimensions')
+      dimensions: this.props.navigation.getParam('dimensions'),
+      scoreTot: this.props.navigation.getParam('scoreTot'),
+      badgeColor: this.props.navigation.getParam('color')
     };
   };
 
@@ -35,9 +35,9 @@ export default class ReportScreen extends Component {
         <RadarChart dimValues={this.state.dimensions}/>
         <View style={containers.repScore}>
           <Text style={texts.repScore}>
-            Note globale : 4
+            Note globale : {this.state.scoreTot}
           </Text>
-          <Badge containerStyle={{ backgroundColor: 'green', height: 30, width: 30}}/>
+          <Badge containerStyle={{ backgroundColor: this.state.badgeColor, height: 30, width: 30}}/>
         </View>
         <Text style={texts.repCohe}>
           Cohérence : 1

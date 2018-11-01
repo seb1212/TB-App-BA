@@ -28,7 +28,8 @@ export default class QuestionnaireScreen extends Component {
       cptCon: 0,
       sumCon: 0,
       cptSol: 0,
-      sumSol: 0
+      sumSol: 0,
+      sumTot: 0
     };
   };
 
@@ -37,27 +38,34 @@ export default class QuestionnaireScreen extends Component {
     const { navigate } = this.props.navigation;
 
     returnValue = (sum,cpt) => {
-      return  (sum>0) || (cpt>0) ? Math.round(sum/cpt) : 1
-    }
+      if ((sum>0) || (cpt>0)) {
+        var res = sum/cpt
+        return res.toFixed(1)
+      }else{
+        return 0
+      }
+    };
 
     createTabDim = () => {
       return [
         {
+          'Contexte': returnValue(this.state.sumCon,this.state.cptCon),
+          'Solutions': returnValue(this.state.sumSol,this.state.cptSol),
+          'Changement': returnValue(this.state.sumCha,this.state.cptCha),
           'Besoins': returnValue(this.state.sumBes,this.state.cptBes),
           'Parties prenantes': returnValue(this.state.sumPP,this.state.cptPP),
-          'Changement': returnValue(this.state.sumCha,this.state.cptCha),
-          'Valeurs': returnValue(this.state.sumVal,this.state.cptVal),
-          'Contexte': returnValue(this.state.sumCon,this.state.cptCon),
-          'Solutions': returnValue(this.state.sumSol,this.state.cptSol)
+          'Valeurs': returnValue(this.state.sumVal,this.state.cptVal)
         }
       ]
     };
 
     getNextQuestion = () => {
       if (this.state.cptNumQuest == this.state.questions.length) {
+        var scoreTot = this.state.sumTot/this.state.questions.length
+        scoreTot = scoreTot.toFixed(1)
         var responses = this.state.responses
         var dimensions = createTabDim()
-        navigate('LaunchReport',{responses, dimensions})
+        navigate('LaunchReport',{responses, dimensions, scoreTot})
       }else{
         this.state.cptNumQuest++
         this.state.cptArrayQuest++
@@ -96,6 +104,7 @@ export default class QuestionnaireScreen extends Component {
 
     saveScore = () => {
       saveDimScore();
+      this.state.sumTot+= this.state.score
       this.state.responses.push({questions: this.state.questions[this.state.cptArrayQuest], score: this.state.score})
     };
 
@@ -107,14 +116,14 @@ export default class QuestionnaireScreen extends Component {
         <Text style={texts.queContQuest}>
           {this.state.questions[this.state.cptArrayQuest].content}
         </Text>
-        <Text style={texts.queCommQuest}>Comment question</Text>
+        <Text style={texts.queCommQuest}>{this.state.questions[this.state.cptArrayQuest].comment}</Text>
         <Text style={texts.queScore}>Note: {this.state.score}</Text>
         <Slider
           style={{
             marginTop: 25,
             marginBottom: 20,
-            marginLeft: 10,
-            marginRight: 10,
+            marginLeft: 30,
+            marginRight: 30,
           }}
           minimumValue={1}
           maximumValue={5}
