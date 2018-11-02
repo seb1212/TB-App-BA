@@ -16,7 +16,8 @@ export default class ReportScreen extends Component {
       responses: this.props.navigation.getParam('responses'),
       dimensions: this.props.navigation.getParam('dimensions'),
       scoreTot: this.props.navigation.getParam('scoreTot'),
-      badgeColor: this.props.navigation.getParam('color')
+      badgeColor: this.props.navigation.getParam('color'),
+      corr: this.props.navigation.getParam('corr')
     };
   };
 
@@ -40,7 +41,7 @@ export default class ReportScreen extends Component {
           <Badge containerStyle={{ backgroundColor: this.state.badgeColor, height: 30, width: 30}}/>
         </View>
         <Text style={texts.repCohe}>
-          Cohérence : 1
+          Cohérence : {this.state.corr}
         </Text>
         <Text style={texts.repExpl}>
           Explication : Vous pouvez demander un rapport plus détaillé en pdf par email

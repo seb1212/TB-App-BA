@@ -61,8 +61,7 @@ export default class QuestionnaireScreen extends Component {
 
     getNextQuestion = () => {
       if (this.state.cptNumQuest == this.state.questions.length) {
-        var scoreTot = this.state.sumTot/this.state.questions.length
-        scoreTot = scoreTot.toFixed(1)
+        var scoreTot = (this.state.sumTot/this.state.questions.length).toFixed(1)
         var responses = this.state.responses
         var dimensions = createTabDim()
         navigate('LaunchReport',{responses, dimensions, scoreTot})

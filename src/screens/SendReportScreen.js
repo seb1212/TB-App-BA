@@ -16,6 +16,7 @@ export default class SendReportScreen extends Component {
       postReport: urls.postReport,
       isCheckedStat: false,
       isCheckedCall: false,
+      isCheckedAd: false,
       isDisabled: true,
       responses: this.props.navigation.getParam('responses'),
       dimensions: this.props.navigation.getParam('dimensions'),
@@ -82,19 +83,26 @@ export default class SendReportScreen extends Component {
       this.setState({isCheckedCall: !this.state.isCheckedCall})
     };
 
+    changeStateChkAd = () => {
+      this.setState({isCheckedAd: !this.state.isCheckedAd})
+    };
+
     return (
       <View style={containers.default}>
         <Text style={texts.sendRepTitle}>
-          Merci d'entrer votre email et d'accepter la collecte des informations pour recevoir le rapport en PDF
+          Merci d'entrer votre email pour recevoir le rapport détaillé en pdf
         </Text>
         <TextInput
           style={texts.sendRepEmail}
           placeholder='exemple@exemple.ch'
           onChangeText={(text) => this.setState({email: text})}
         />
+        <Text style={texts.sendRepTitle}>
+          Pour recevoir ce rapport, merci d'accepter les conditions de collecte de vos données
+        </Text>
         <CheckBox
           center
-          title='Acceptez-vous que nous collections vos réponses et votre email à des fins statistiques ?'
+          title='Acceptez vous que vos réponses et votre email soient conservés à des fins statistiques ?'
           checked={this.state.isCheckedStat}
           onPress={() => changeStateChkStat()}
         />
@@ -103,6 +111,12 @@ export default class SendReportScreen extends Component {
           title='Souhaitez-vous être contacté pour un rapport plus détaillé ?'
           checked={this.state.isCheckedCall}
           onPress={() => changeStateChkCall()}
+        />
+        <CheckBox
+          center
+          title='Souhaitez-vous recevoir des informations sur les activités de la société ?'
+          checked={this.state.isCheckedAd}
+          onPress={() => changeStateChkAd()}
         />
         <Button
             buttonStyle={buttons.report}

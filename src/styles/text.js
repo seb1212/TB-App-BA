@@ -96,9 +96,9 @@ export const texts = StyleSheet.create({
   sendRepTitle: {
     color: '#000000',
     fontSize: responsiveFontSize(3),
-    fontWeight: 'bold',
+  //  fontWeight: '',
     textAlign: 'center',
-    marginTop: 40,
-    marginBottom: 40,
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
