@@ -13,8 +13,6 @@ export default class WelcomeScreen extends Component {
     super(props);
 
     this.state = {
-      baseURL: urls.baseURL,
-      getQuest: urls.getQuest,
       questions: []
     };
   };
@@ -30,7 +28,7 @@ export default class WelcomeScreen extends Component {
     const BEF_PROJ = 'Avant le projet'; DUR_PROJ = 'Pendant le projet'; AFT_PROJ = 'Après le projet';
 
     const api = apisauce.create({
-      baseURL: this.state.baseURL,
+      baseURL: urls.baseURL,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -41,7 +39,7 @@ export default class WelcomeScreen extends Component {
 
     getQuestions = (infoProjet) => {
       api
-        .get(this.state.getQuest, {infoProjet: infoProjet})
+        .get(urls.getQuest, {infoProjet: infoProjet})
         .then((response) => this.state.questions = response.data)
       setTimeout( () => {goToNextScreen()},500)
     };

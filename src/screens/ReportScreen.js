@@ -13,7 +13,6 @@ export default class ReportScreen extends Component {
     super(props);
 
     this.state = {
-      responses: this.props.navigation.getParam('responses'),
       dimensions: this.props.navigation.getParam('dimensions'),
       scoreTot: this.props.navigation.getParam('scoreTot'),
       badgeColor: this.props.navigation.getParam('color'),
@@ -25,10 +24,24 @@ export default class ReportScreen extends Component {
 
     const { navigate } = this.props.navigation;
 
+    getLevel = () => {
+      if (this.state.scoreTot >= 4) {
+        return 'Bien'
+      }else if (this.state.scoreTot >= 3){
+        return 'Moyen'
+      }else{
+        return 'Insuffisant'
+      }
+    };
+
     goToNextScreen = () => {
-      var responses = this.state.responses;
-      var dimensions = this.state.dimensions;
-      navigate('SendReport',{responses, dimensions});
+      var level = getLevel()
+      var responses = this.props.navigation.getParam('responses')
+      var dimensions = this.state.dimensions
+      var corr = this.state.corr
+      var scoreTot = this.state.scoreTot
+      console.log('scoreTot: '+scoreTot)
+      navigate('SendReport',{responses, dimensions, corr, level, scoreTot})
     };
 
     return (
@@ -42,6 +55,9 @@ export default class ReportScreen extends Component {
         </View>
         <Text style={texts.repCohe}>
           Cohérence : {this.state.corr}
+        </Text>
+        <Text style={texts.repCohe}>
+          (0 étant le mieux et 1 le moins bien)
         </Text>
         <Text style={texts.repExpl}>
           Explication : Vous pouvez demander un rapport plus détaillé en pdf par email

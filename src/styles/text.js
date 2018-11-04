@@ -81,13 +81,14 @@ export const texts = StyleSheet.create({
     fontSize: responsiveFontSize(3),
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 40,
+    marginBottom: 20,
+    width: responsiveWidth(95)
   },
   sendRepEmail: {
     color: '#000000',
     fontSize: responsiveFontSize(3),
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 10,
     height: 50,
     width: responsiveWidth(75),
     borderColor: 'gray',
@@ -96,9 +97,15 @@ export const texts = StyleSheet.create({
   sendRepTitle: {
     color: '#000000',
     fontSize: responsiveFontSize(3),
-  //  fontWeight: '',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  sendRepSubTitle: {
+    color: '#000000',
+    fontSize: responsiveFontSize(2),
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 10,
+    width: responsiveWidth(90)
   },
 });

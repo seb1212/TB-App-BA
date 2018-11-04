@@ -12,14 +12,10 @@ export default class SendReportScreen extends Component {
     super(props);
 
     this.state = {
-      baseURL: urls.baseURL,
-      postReport: urls.postReport,
       isCheckedStat: false,
       isCheckedCall: false,
       isCheckedAd: false,
       isDisabled: true,
-      responses: this.props.navigation.getParam('responses'),
-      dimensions: this.props.navigation.getParam('dimensions'),
       email: ''
     };
   };
@@ -29,41 +25,54 @@ export default class SendReportScreen extends Component {
     const { navigate } = this.props.navigation;
 
     const api = apisauce.create({
-      baseURL: this.state.baseURL,
+      baseURL: urls.baseURL,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Charset': 'UTF-8'
       },
-      timeout: 15000,
+      timeout: 8000,
     });
 
     postReport = () => {
+      var contact = this.state.isCheckedCall ? 'oui' : 'non'
+      var ad = this.state.isCheckedAd ? 'oui' : 'non'
+      console.log('cont: '+contact+' ad: '+ad)
       api
-        .post(this.state.postReport, {responses: this.state.responses,dimensions: this.state.dimensions,
-              email: this.state.email})
+        .post(urls.postReport, {responses: this.props.navigation.getParam('responses'),dimensions: this.props.navigation.getParam('dimensions'),
+              email: this.state.email,contact: contact,ad: ad,level: this.props.navigation.getParam('level'),corr: this.props.navigation.getParam('corr'),
+              scoreTot: this.props.navigation.getParam('scoreTot')})
         .then((response) => {
+          var title = ''
+          var msg = ''
+          var txtOpOne = {}
+          var txtOpTwo = {}
+          var cancelable = true
           if (response.status == 200) {
-            Alert.alert(
-            'Email envoyé',
-            'Voulez-vous refaire un questionnaire ?',
-            [
-              {text: 'Non', onPress: () => BackHandler.exitApp(), style: 'cancel'},
-              {text: 'Oui', onPress: () => navigate('Welcome')},
-            ],
-            { cancelable: false }
-          );
-        }else{
-          Alert.alert(
-          'Email non envoyé',
-          'Merci de vérifier votre email et votre connexion',
-          [
-            {text: 'OK', onPress: () => console.log('ok'),style: 'cancel'},
-          ],
-          { cancelable: false }
-        );
-        }
-      console.log(response.data)})
+            title = 'Email envoyé'
+            msg = 'Voulez-vous refaire un questionnaire ?'
+            txtOpOne = {text: 'Non', onPress: () => console.log('Non'), style: 'cancel'}
+            txtOpTwo = {text: 'Oui', onPress: () => this.props.navigation.goBack()}
+            cancelable = false
+          //  txtOpOne = {text: 'Non', onPress: () => BackHandler.exitApp(), style: 'cancel'}
+          //  txtOpTwo = {text: 'Oui', onPress: () => navigate('Welcome')}
+        }else if (response.data == 'Email NOK' || response.data == 'NOK'){
+            title = 'Email non envoyé'
+            msg = 'Merci de vérifier votre email'
+            txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
+        }else if (response.status == null || response.data == null){
+            title = 'Email non envoyé'
+            msg = 'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer.'
+            txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
+          }else{
+            title = 'else'
+            msg = 'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer.'
+            txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
+          }
+          console.log('data: '+response.data)
+          console.log('status: '+response.status)
+          Alert.alert(title,msg,[txtOpOne,txtOpTwo],{cancelable: cancelable}); //{ cancelable: false }
+        })
     };
 
     stateButton = () => {
@@ -97,7 +106,7 @@ export default class SendReportScreen extends Component {
           placeholder='exemple@exemple.ch'
           onChangeText={(text) => this.setState({email: text})}
         />
-        <Text style={texts.sendRepTitle}>
+        <Text style={texts.sendRepSubTitle}>
           Pour recevoir ce rapport, merci d'accepter les conditions de collecte de vos données
         </Text>
         <CheckBox
