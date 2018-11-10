@@ -9,8 +9,6 @@ export const containers = StyleSheet.create({
     justifyContent: 'center',
     height: responsiveHeight(100),
     width: responsiveWidth(100),
-    marginTop: -25,
-    marginBottom: -45,
   },
   questionnaire: {
     flex: 1,
@@ -19,8 +17,6 @@ export const containers = StyleSheet.create({
     justifyContent: 'center',
     height: responsiveHeight(100),
     width: responsiveWidth(100),
-    marginTop: -25,
-    marginBottom: -45,
   },
   repScrollContentStyle: {
     alignItems: 'center',

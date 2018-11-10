@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, TextInput, Alert } from 'react-native';
-import { Button, Text, CheckBox } from 'react-native-elements';
-import apisauce from 'apisauce';
+import { Text } from 'react-native-elements';
+import MyCheckbox from "../components/MyCheckbox";
+import ActionButton from "../components/ActionButton";
 import { urls } from '../base/urls';
+import { requests } from '../base/requests';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
@@ -21,24 +23,30 @@ export default class SendReportScreen extends Component {
   };
 
   render() {
-
+    // Navigation
     const { navigate } = this.props.navigation;
 
-    const api = apisauce.create({
-      baseURL: urls.baseURL,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Charset': 'UTF-8'
-      },
-      timeout: 8000,
-    });
+    // Titres des boutons
+    const BTN_SEND_REP = 'Envoyer rapport';
+    // Texte info email
+    const TXT_INFO_EMAIL = "Merci d'entrer votre email pour recevoir le rapport détaillé en pdf";
+    // Texte email placeholder
+    const TXT_EM_PLH = "exemple@exemple.ch";
+    // Texte info collecte information
+    const TXT_INFO_COLLECT = "Pour recevoir ce rapport, merci d'accepter les conditions de collecte de vos données";
+    // Texte checkbox stat
+    const TXT_CHB_STAT = "Acceptez-vous que vos réponses et votre email soient conservés à des fins statistiques ?";
+    // Texte checkbox contact
+    const TXT_CHB_CONTACT = "Souhaitez-vous être contacté pour un rapport plus détaillé ?";
+    // Texte checkbox activité société
+    const TXT_CHB_AD = "Souhaitez-vous recevoir des informations sur les activités de la société ?";
+
 
     postReport = () => {
       var contact = this.state.isCheckedCall ? 'oui' : 'non'
       var ad = this.state.isCheckedAd ? 'oui' : 'non'
       console.log('cont: '+contact+' ad: '+ad)
-      api
+      requests.api
         .post(urls.postReport, {responses: this.props.navigation.getParam('responses'),dimensions: this.props.navigation.getParam('dimensions'),
               email: this.state.email,contact: contact,ad: ad,level: this.props.navigation.getParam('level'),corr: this.props.navigation.getParam('corr'),
               scoreTot: this.props.navigation.getParam('scoreTot')})
@@ -48,7 +56,7 @@ export default class SendReportScreen extends Component {
           var txtOpOne = {}
           var txtOpTwo = {}
           var cancelable = true
-          if (response.status == 200) {
+          if (response.status == 200 && response.data == 'OK') {
             title = 'Email envoyé'
             msg = 'Voulez-vous refaire un questionnaire ?'
             txtOpOne = {text: 'Non', onPress: () => console.log('Non'), style: 'cancel'}
@@ -60,7 +68,7 @@ export default class SendReportScreen extends Component {
             title = 'Email non envoyé'
             msg = 'Merci de vérifier votre email'
             txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
-        }else if (response.status == null || response.data == null){
+        }else if (response.status == null || response.data == null || response.data == 'Erreur enregistrement rapport'){
             title = 'Email non envoyé'
             msg = 'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer.'
             txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
@@ -98,49 +106,33 @@ export default class SendReportScreen extends Component {
 
     return (
       <View style={containers.default}>
-        <Text style={texts.sendRepTitle}>
-          Merci d'entrer votre email pour recevoir le rapport détaillé en pdf
-        </Text>
+        <Text style={texts.sendRepTitle}>{ TXT_INFO_EMAIL }</Text>
         <TextInput
           style={texts.sendRepEmail}
-          placeholder='exemple@exemple.ch'
+          placeholder={ TXT_EM_PLH }
           onChangeText={(text) => this.setState({email: text})}
         />
-        <Text style={texts.sendRepSubTitle}>
-          Pour recevoir ce rapport, merci d'accepter les conditions de collecte de vos données
-        </Text>
-        <CheckBox
-          center
-          title='Acceptez vous que vos réponses et votre email soient conservés à des fins statistiques ?'
+        <Text style={texts.sendRepSubTitle}>{ TXT_INFO_COLLECT }</Text>
+        <MyCheckbox
+          title={ TXT_CHB_STAT }
           checked={this.state.isCheckedStat}
           onPress={() => changeStateChkStat()}
         />
-        <CheckBox
-          center
-          title='Souhaitez-vous être contacté pour un rapport plus détaillé ?'
+        <MyCheckbox
+          title={ TXT_CHB_CONTACT }
           checked={this.state.isCheckedCall}
           onPress={() => changeStateChkCall()}
         />
-        <CheckBox
-          center
-          title='Souhaitez-vous recevoir des informations sur les activités de la société ?'
+        <MyCheckbox
+          title={ TXT_CHB_AD }
           checked={this.state.isCheckedAd}
           onPress={() => changeStateChkAd()}
         />
-        <Button
-            buttonStyle={buttons.report}
-            containerViewStyle={{
-              backgroundColor: 'transparent',
-              alignItems: 'center',
-            }}
-            large
-            raised
-            rounded
-            color='white'
-            fontWeight='bold'
+        <ActionButton
+            buttonStyle={buttons.sendRep}
             disabled={this.state.isDisabled}
             onPress={() => postReport()}
-            title='Envoyer rapport'
+            title={ BTN_SEND_REP }
         />
       </View>
     );

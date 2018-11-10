@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
 import { Button } from 'react-native-elements';
-import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-
 
 export default class ActionButton extends Component {
+  constructor(props) {
+    super(props);
+  };
+
   render() {
-    return (<Button
-              buttonStyle={{
-                backgroundColor:'#0000FF',
-                width: responsiveWidth(90),
-                height: responsiveHeight(10),
-              }}
-              large
-              raised
-              rounded
-              color='black'
-              title='Avant le projet' />
+    return (
+      <Button
+        containerViewStyle={{
+          backgroundColor: 'transparent',
+          alignItems: 'center',
+        }}
+        large
+        raised
+        rounded
+        color='white'
+        fontWeight='bold'
+        buttonStyle={this.props.buttonStyle}
+        disabled={this.props.disabled}
+        onPress={this.props.onPress}
+        title={this.props.title}
+      />
     );
   }
 }

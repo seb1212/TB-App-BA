@@ -45,7 +45,7 @@ const stackNavigator = createStackNavigator({
   LaunchReport: {
     screen: LaunchReportScreen,
     navigationOptions: ({ navigation }) => ({
-      title: 'Merci',
+      title: 'Visualiser le rapport',
       headerStyle: {
         backgroundColor: '#4169E1',
       },

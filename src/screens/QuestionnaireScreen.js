@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Button, Slider, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
+import ActionButton from "../components/ActionButton";
+import MySlider from "../components/MySlider";
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
@@ -10,8 +12,6 @@ export default class QuestionnaireScreen extends Component {
     super(props);
 
     this.state = {
-      titleButton: 'Valider',
-      refreshing: false,
       score: 1,
       questions: this.props.navigation.getParam('questions'),
       responses: [],
@@ -34,8 +34,19 @@ export default class QuestionnaireScreen extends Component {
   };
 
   render() {
-
+    // Navigation
     const { navigate } = this.props.navigation;
+
+    // Titres des boutons
+    const BTN_VAL = 'Valider';
+    // Texte info curseur
+    const TXT_INFO_SLIDER = "Veuillez donner une note en bougeant le curseur";
+    // Texte info score
+    const TXT_INFO_SCORE = "(1 étant la plus basse et 5 la plus haute)";
+    // Texte question
+    const TXT_QUEST = "Question   ";
+    // Texte score
+    const TXT_SCORE = "Note: ";
 
     returnValue = (sum,cpt) => {
       if ((sum>0) || (cpt>0)) {
@@ -110,51 +121,25 @@ export default class QuestionnaireScreen extends Component {
     return (
       <View style={containers.questionnaire}>
         <Text style={texts.queNumQuest}>
-            Question {this.state.cptNumQuest}/{this.state.questions.length}
+          {TXT_QUEST}{this.state.cptNumQuest}/{this.state.questions.length}
         </Text>
-        <Text style={texts.queContQuest}>
-          {this.state.questions[this.state.cptArrayQuest].content}
-        </Text>
+        <View style={containers.default}>
+          <Text style={texts.queContQuest}>
+            {this.state.questions[this.state.cptArrayQuest].content}
+          </Text>
+        </View>
         <Text style={texts.queCommQuest}>{this.state.questions[this.state.cptArrayQuest].comment}</Text>
-        <Text style={texts.queScore}>Note: {this.state.score}</Text>
-        <Slider
-          style={{
-            marginTop: 25,
-            marginBottom: 20,
-            marginLeft: 30,
-            marginRight: 30,
-          }}
-          minimumValue={1}
-          maximumValue={5}
-          step={1}
-          animateTransitions={true}
-          thumbStyle={{
-            backgroundColor: '#708090',
-            position: 'absolute',
-            width: 25,
-            height: 50,
-            borderRadius: 25,
-            top: 22,
-          }}
-          minimumTrackTintColor={'#32CD32'}
+        <Text style={texts.queScore}>{TXT_SCORE}{this.state.score}</Text>
+        <MySlider
           value={this.state.score}
           onValueChange={(score) => this.setState({score})}
         />
-        <Text style={texts.queSmallTitle}>Veuillez donner une note en bougeant le curseur</Text>
-        <Text style={texts.queSmallTitle}>(1 étant la plus basse et 5 la plus haute)</Text>
-        <Button
+        <Text style={texts.queSmallTitle}>{ TXT_INFO_SLIDER }</Text>
+        <Text style={texts.queSmallTitle}>{ TXT_INFO_SCORE }</Text>
+        <ActionButton
           buttonStyle={buttons.quest}
-          containerViewStyle={{
-            backgroundColor: 'transparent',
-            alignItems: 'center',
-          }}
-          large
-          raised
-          rounded
-          color='white'
-          fontWeight='bold'
           onPress={() => {saveScore(),getNextQuestion()}}
-          title={this.state.titleButton}
+          title={ BTN_VAL }
         />
       </View>
     );

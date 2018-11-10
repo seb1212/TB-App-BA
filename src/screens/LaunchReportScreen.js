@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
+import ActionButton from "../components/ActionButton";
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
@@ -32,12 +33,23 @@ export default class LaunchReportScreen extends Component {
   };
 
   render() {
-
+    // Navigation
     const { navigate } = this.props.navigation;
 
+    // Titres des boutons
+    const BTN_REPORT = 'Rapport';
+    // Ecart maximum entre les scores
+    const DIFFERENCE_MAX = 4;
+    // Couleur du badge
+    const GREEN = 'green'; ORANGE = 'orange'; RED = 'red';
+    // Texte remerciement
+    const TXT_THANKS = "Nous vous remerçions d'avoir rempli le questionnaire.";
+    // Texte info action
+    const TXT_INFO_ACT = "Pour visualiser le rapport de votre questionnaire, merci de cliquer sur le bouton ci-dessous.";
+
     getCorrelationQuestions = () => {
-      var idQ = ""
-      var score = ""
+      var idQ = 0
+      var score = 0
       for (var i=0; i<this.state.responses.length; i++) {
         switch (this.state.responses[i].questions.type) {
           case 'Besoins':
@@ -216,21 +228,6 @@ export default class LaunchReportScreen extends Component {
             break;
         }
       }
-      console.log(this.state.grBCh_ChB)
-      console.log(this.state.grBPP_PPB)
-      console.log(this.state.grBV_VB)
-      console.log(this.state.grBCo_CoB)
-      console.log(this.state.grBS_SB)
-      console.log(this.state.grPPCh_ChPP)
-      console.log(this.state.grPPV_VPP)
-      console.log(this.state.grPPCo_CoPP)
-      console.log(this.state.grPPS_SPP)
-      console.log(this.state.grChV_VCh)
-      console.log(this.state.grChCo_CoCh)
-      console.log(this.state.grChS_SCh)
-      console.log(this.state.grVCo_CoV)
-      console.log(this.state.grVS_SV)
-      console.log(this.state.grCoS_SCo)
     };
 
     getCorrelationReport = () => {
@@ -295,21 +292,20 @@ export default class LaunchReportScreen extends Component {
         this.state.res+= Math.max(...this.state.grCoS_SCo)-Math.min(...this.state.grCoS_SCo)
       }
       if (this.state.cptNbGroups > 0) {
-        this.state.res = (this.state.res/this.state.cptNbGroups).toFixed(1)
+        var worthRes = DIFFERENCE_MAX * this.state.cptNbGroups
+        this.state.res = (this.state.res/worthRes).toFixed(1)
       }else{
         this.state.res = 0
       }
-      console.log('res: fin'+this.state.res)
-      console.log('cpt: '+this.state.cptNbGroups)
     };
 
     getBadgeColor = (scoreTot) => {
       if (scoreTot >= 4) {
-        return 'green'
+        return GREEN
       }else if (scoreTot >= 3){
-        return 'orange'
+        return ORANGE
       }else{
-        return 'red'
+        return RED
       }
     };
 
@@ -326,26 +322,15 @@ export default class LaunchReportScreen extends Component {
 
     return (
       <View style={containers.default}>
-        <Text style={texts.launRepThank}>
-          Merci d'avoir rempli le questionnaire.
-        </Text>
-        <Text style={texts.launRepClic}>
-          Veuillez cliquer sur le bouton pour visualiser le rapport.
-        </Text>
-        <Button
-          buttonStyle={buttons.launRep}
-          containerViewStyle={{
-            backgroundColor: 'transparent',
-            alignItems: 'center',
-          }}
-          large
-          raised
-          rounded
-          color='white'
-          fontWeight='bold'
-          onPress={() => goToNextScreen()}
-          title={'Rapport'}
-        />
+        <Text style={texts.launRepThank}>{ TXT_THANKS }</Text>
+        <Text style={texts.launRepClic}>{ TXT_INFO_ACT }</Text>
+        <View style={containers.default}>
+          <ActionButton
+            buttonStyle={buttons.launRep}
+            onPress={() => goToNextScreen()}
+            title={ BTN_REPORT }
+          />
+        </View>
       </View>
     );
   }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
-import apisauce from 'apisauce';
+import { View, Alert } from 'react-native';
+import { Text } from 'react-native-elements';
+import ActionButton from "../components/ActionButton";
 import { urls } from '../base/urls';
+import { requests } from '../base/requests';
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
@@ -18,29 +19,29 @@ export default class WelcomeScreen extends Component {
   };
 
   render() {
-
+    // Navigation
     const { navigate } = this.props.navigation;
 
-    // constantes qui représentent les valeurs de la table projet
+    // Valeurs de la table projet
     const BEFORE = 1; DURING = 2; AFTER = 3;
+    // Titres des boutons
+    const BTN_BEF_PROJ = 'Avant le projet'; BTN_DUR_PROJ = 'Pendant le projet'; BTN_AFT_PROJ = 'Après le projet';
+    // Texte de bienvenue
+    const TXT_WELCOME = "Bienvenue sur l'application qui vous permet d'évaluer l'intégration de Business Analyse dans votre projet";
+    // Texte stade projet
+    const TXT_PROJECT = "A quel stade du projet êtes-vous ?";
+    // Paramètrage requête HTTP
 
-    // constantes qui représentent les titres des boutons
-    const BEF_PROJ = 'Avant le projet'; DUR_PROJ = 'Pendant le projet'; AFT_PROJ = 'Après le projet';
-
-    const api = apisauce.create({
-      baseURL: urls.baseURL,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Charset': 'UTF-8'
-      },
-      timeout: 15000,
-    });
 
     getQuestions = (infoProjet) => {
-      api
+      requests.api
         .get(urls.getQuest, {infoProjet: infoProjet})
-        .then((response) => this.state.questions = response.data)
+        .then((response) => {this.state.questions = response.data
+          Alert.alert(
+            'Problème de connexion',
+            'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer'
+          )
+        })
       setTimeout( () => {goToNextScreen()},500)
     };
 
@@ -51,46 +52,22 @@ export default class WelcomeScreen extends Component {
 
     return (
       <View style={containers.default}>
-        <Text style={texts.welFirstTitle}>
-          Bienvenue sur l'application qui vous
-          permet d'évaluer l'intégration de Business Analyse
-          dans votre projet
-        </Text>
-        <Text style={texts.welSecondTitle}>
-          A quel stade du projet êtes-vous ?
-        </Text>
-        <Button
+        <Text style={texts.welFirstTitle}>{ TXT_WELCOME }</Text>
+        <Text style={texts.welSecondTitle}>{ TXT_PROJECT }</Text>
+        <ActionButton
           buttonStyle={buttons.welDefault}
-          containerViewStyle={{backgroundColor: 'transparent'}}
-          large
-          raised
-          rounded
-          color='white'
-          fontWeight='bold'
           onPress={() => getQuestions(BEFORE)}
-          title={BEF_PROJ}
+          title={BTN_BEF_PROJ}
         />
-        <Button
+        <ActionButton
           buttonStyle={buttons.welDefault}
-          containerViewStyle={{backgroundColor: 'transparent'}}
-          large
-          raised
-          rounded
-          color='white'
-          fontWeight='bold'
           onPress={() => getQuestions(DURING)}
-          title={DUR_PROJ}
+          title={BTN_DUR_PROJ}
         />
-        <Button
+        <ActionButton
           buttonStyle={buttons.welLast}
-          containerViewStyle={{backgroundColor: 'transparent'}}
-          large
-          raised
-          rounded
-          color='white'
-          fontWeight='bold'
           onPress={() => getQuestions(AFTER)}
-          title={AFT_PROJ}
+          title={BTN_AFT_PROJ}
         />
       </View>
     );

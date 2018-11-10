@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, Badge, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
+import ActionButton from "../components/ActionButton";
+import MyBadge from "../components/MyBadge";
 import RadarChart from "../components/RadarChart";
 import  { containers } from '../styles/container';
 import  { texts } from '../styles/text';
 import  { buttons } from '../styles/button';
-
-//const {height, width} = Dimensions.get(window);
 
 export default class ReportScreen extends Component {
   constructor(props) {
@@ -21,16 +21,29 @@ export default class ReportScreen extends Component {
   };
 
   render() {
-
+    // Navigation
     const { navigate } = this.props.navigation;
+
+    // Titres des boutons
+    const BTN_ASK_REP = 'Demander rapport';
+    // Niveau implémetation rapport
+    const WELL = 'Bien'; MEDIUM = 'Moyen'; BAD = 'Insuffisant';
+    // Texte score total
+    const TXT_SCORE_TOT = "Note globale: ";
+    // Texte cohérence
+    const TXT_CORR = "Cohérence: ";
+    // Texte info cohérence
+    const TXT_INFO_CORR = "(0 étant le mieux et 1 le moins bien)";
+    // Texte explication
+    const TXT_EXPLAIN = "Explication : Vous pouvez demander un rapport plus détaillé en pdf par email";
 
     getLevel = () => {
       if (this.state.scoreTot >= 4) {
-        return 'Bien'
+        return WELL
       }else if (this.state.scoreTot >= 3){
-        return 'Moyen'
+        return MEDIUM
       }else{
-        return 'Insuffisant'
+        return BAD
       }
     };
 
@@ -40,7 +53,6 @@ export default class ReportScreen extends Component {
       var dimensions = this.state.dimensions
       var corr = this.state.corr
       var scoreTot = this.state.scoreTot
-      console.log('scoreTot: '+scoreTot)
       navigate('SendReport',{responses, dimensions, corr, level, scoreTot})
     };
 
@@ -49,32 +61,19 @@ export default class ReportScreen extends Component {
         <RadarChart dimValues={this.state.dimensions}/>
         <View style={containers.repScore}>
           <Text style={texts.repScore}>
-            Note globale : {this.state.scoreTot}
+            { TXT_SCORE_TOT }{this.state.scoreTot}
           </Text>
-          <Badge containerStyle={{ backgroundColor: this.state.badgeColor, height: 30, width: 30}}/>
+          <MyBadge badgeColor={this.state.badgeColor}/>
         </View>
         <Text style={texts.repCohe}>
-          Cohérence : {this.state.corr}
+          { TXT_CORR }{this.state.corr}
         </Text>
-        <Text style={texts.repCohe}>
-          (0 étant le mieux et 1 le moins bien)
-        </Text>
-        <Text style={texts.repExpl}>
-          Explication : Vous pouvez demander un rapport plus détaillé en pdf par email
-        </Text>
-        <Button
+        <Text style={texts.repCohe}>{ TXT_INFO_CORR }</Text>
+        <Text style={texts.repExpl}>{ TXT_EXPLAIN }</Text>
+        <ActionButton
             buttonStyle={buttons.report}
-            containerViewStyle={{
-              backgroundColor: 'transparent',
-              alignItems: 'center',
-            }}
-            large
-            raised
-            rounded
-            color='white'
-            fontWeight='bold'
             onPress={() => goToNextScreen()}
-            title='Demander rapport'
+            title={ BTN_ASK_REP }
         />
       </ScrollView>
     );
