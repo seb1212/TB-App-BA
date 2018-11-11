@@ -57,7 +57,11 @@ export default class ReportScreen extends Component {
     };
 
     return (
-      <ScrollView contentContainerStyle={containers.repContentStyle} style={containers.repScroll}>
+      <ScrollView
+        contentContainerStyle={containers.repContentStyle} style={containers.repScroll}
+        maximumZoomScale= {5}
+        minimumZoomScale= {0}
+      >
         <RadarChart dimValues={this.state.dimensions}/>
         <View style={containers.repScore}>
           <Text style={texts.repScore}>
