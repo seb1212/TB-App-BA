@@ -45,7 +45,6 @@ export default class SendReportScreen extends Component {
     postReport = () => {
       var contact = this.state.isCheckedCall ? 'oui' : 'non'
       var ad = this.state.isCheckedAd ? 'oui' : 'non'
-      console.log('cont: '+contact+' ad: '+ad)
       requests.api
         .post(urls.postReport, {responses: this.props.navigation.getParam('responses'),dimensions: this.props.navigation.getParam('dimensions'),
               email: this.state.email,contact: contact,ad: ad,level: this.props.navigation.getParam('level'),corr: this.props.navigation.getParam('corr'),
@@ -59,11 +58,9 @@ export default class SendReportScreen extends Component {
           if (response.status == 200 && response.data == 'OK') {
             title = 'Email envoyé'
             msg = 'Voulez-vous refaire un questionnaire ?'
-            txtOpOne = {text: 'Non', onPress: () => console.log('Non'), style: 'cancel'}
-            txtOpTwo = {text: 'Oui', onPress: () => this.props.navigation.goBack()}
+            txtOpOne = {text: 'Non', onPress: () => this.props.navigation.goBack(), style: 'cancel'}
+            txtOpTwo = {text: 'Oui', onPress: () => navigate('Welcome')}
             cancelable = false
-          //  txtOpOne = {text: 'Non', onPress: () => BackHandler.exitApp(), style: 'cancel'}
-          //  txtOpTwo = {text: 'Oui', onPress: () => navigate('Welcome')}
         }else if (response.data == 'Email NOK' || response.data == 'NOK'){
             title = 'Email non envoyé'
             msg = 'Merci de vérifier votre email'
@@ -72,14 +69,8 @@ export default class SendReportScreen extends Component {
             title = 'Email non envoyé'
             msg = 'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer.'
             txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
-          }else{
-            title = 'else'
-            msg = 'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer.'
-            txtOpOne = {text: 'OK', onPress: () => {},style: 'cancel'}
-          }
-          console.log('data: '+response.data)
-          console.log('status: '+response.status)
-          Alert.alert(title,msg,[txtOpOne,txtOpTwo],{cancelable: cancelable}); //{ cancelable: false }
+        }
+        Alert.alert(title,msg,[txtOpOne,txtOpTwo],{cancelable: cancelable});
         })
     };
 

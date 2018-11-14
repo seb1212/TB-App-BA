@@ -36,11 +36,13 @@ export default class WelcomeScreen extends Component {
     getQuestions = (infoProjet) => {
       requests.api
         .get(urls.getQuest, {infoProjet: infoProjet})
-        .then((response) => {this.state.questions = response.data
-          Alert.alert(
-            'Problème de connexion',
-            'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer'
-          )
+        .then((response) => {
+          this.state.questions = response.data
+          if (response.status == null || response.data == null)
+            Alert.alert(
+              'Problème de connexion',
+              'Une erreur est survenue. Merci de vérifier votre connexion réseau et de réessayer'
+            )
         })
       setTimeout( () => {goToNextScreen()},500)
     };

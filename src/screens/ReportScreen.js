@@ -58,7 +58,7 @@ export default class ReportScreen extends Component {
 
     return (
       <ScrollView
-        contentContainerStyle={containers.repContentStyle} style={containers.repScroll}
+        contentContainerStyle={containers.repScrollContentStyle} style={containers.repScroll}
         maximumZoomScale= {5}
         minimumZoomScale= {0}
       >
